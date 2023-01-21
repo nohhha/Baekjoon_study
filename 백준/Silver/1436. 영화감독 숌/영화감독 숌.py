@@ -1,7 +1,13 @@
 n=int(input())
-nlist=[]
-for i in range(10000000):
+cnt=0
+i=666
+while True:
     if '666' in str(i):
-        nlist.append(i)
-        if len(nlist)==n:
-            print(nlist[n-1])
+        cnt+=1
+        if cnt==n:
+            print(i)
+            break
+        else:
+          i+=1
+    else:
+      i+=1
