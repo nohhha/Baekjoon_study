@@ -1,8 +1,11 @@
+import sys
+input = sys.stdin.readline
+
 n,m=map(int, input().split())
-S=[]
+S=set()
 for i in range(n):
-    S.append(input())
-S=set(S)
+    S.add(input())
+
 cnt=0
 for i in range(m):
     test=input()
