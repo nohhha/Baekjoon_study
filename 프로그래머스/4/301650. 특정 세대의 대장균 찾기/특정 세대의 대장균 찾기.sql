@@ -1,0 +1,19 @@
+-- 코드를 작성해주세요
+WITH RECURSIVE tree AS (
+    -- 1세대: 부모가 NULL
+    SELECT e1.ID, 1 AS GENERATION
+    FROM ECOLI_DATA AS e1
+    WHERE e1.PARENT_ID IS NULL
+    
+    UNION ALL
+    
+    -- 2세대 이후
+    SELECT e2.ID, t.GENERATION + 1 AS GENERATION
+    FROM ECOLI_DATA AS e2 
+    JOIN tree AS t
+    ON t.ID = e2.PARENT_ID
+)
+SELECT t.ID
+FROM tree AS t
+WHERE t.GENERATION=3
+ORDER BY t.ID
