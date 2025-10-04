@@ -1,11 +1,11 @@
 
 
 def add_cnt(alpha, i):
-    dic = {"A":0, "E":1, "I":2, "O":3, "U":4}  
+    lst = ["A", "E", "I", "O", "U"]
     cnt  = 1
     for j in range(1, 6-i):
         cnt += 5**j
-    cnt *= dic[alpha]
+    cnt *= lst.index(alpha)
     return cnt+1
 
 def solution(word):
