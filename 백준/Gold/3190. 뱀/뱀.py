@@ -10,7 +10,10 @@ dr = 0
 
 # 사과 개수
 K = int(input())
-apples = [tuple(map(lambda x: int(x)-1, input().split())) for _ in range(K)]
+apple_arr = [[0]*N for _ in range(N)]
+for _ in range(K):
+    i,j = map(lambda x: int(x)-1, input().split())
+    apple_arr[i][j]=1
 
 # 뱀의 방향 변환 횟수
 L = int(input())
@@ -26,23 +29,20 @@ total_time = 0
 while True:
     tail, head = snake[0], snake[-1]
     next_head = (head[0]+dirs[dr][0], head[1]+dirs[dr][1])
+    nhi,nhj = next_head
     total_time += 1
 
     # 종료 조건
-    if next_head[0]==-1 or next_head[0]==N or next_head[1]==-1 or next_head[1]==N:
+    if nhi==-1 or nhi==N or nhj==-1 or nhj==N:
         break
     if next_head in snake:
         break
 
     # 사과 여부
     snake.append(next_head)
-    found = False
-    for i in range(len(apples)):
-        if next_head==apples[i]:
-            apples.pop(i)
-            found = True
-            break
-    if not found:
+    if apple_arr[nhi][nhj]==1:
+        apple_arr[nhi][nhj]=0
+    else:
         snake.popleft()
 
     # 방향 전환
