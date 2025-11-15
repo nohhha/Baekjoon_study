@@ -10,30 +10,36 @@ for _ in range(m):
     graph[b].append((a,c))
 
 INF = 1e9
-dist = [[INF]*(n+1) for _ in range(n+1)]    
-answer = [[0]*(n+1) for _ in range(n+1)]
+# 다익스트라
+answer = []
+
+def dijkstra(start):
+    dist = [INF]*(n+1)
+    next = [i for i in range(n+1)]
+    q = []
+    dist[start] = 0
+    heapq.heappush(q,(0,start))
+
+    while q:
+        cur_d, cur_v = heapq.heappop(q)
+        if cur_d > dist[cur_v]:
+            continue
+        for new_v, new_d in graph[cur_v]:
+            cost = cur_d + new_d
+            if cost < dist[new_v]:
+                dist[new_v] = cost
+                heapq.heappush(q, (cost, new_v))
+                if cur_v!=start:
+                    next[new_v] = next[cur_v]
+
+    return next
+
 for i in range(1,n+1):
-    dist[i][i] = 0
-    for v,w in graph[i]:
-        dist[i][v] = w
+    next = dijkstra(i)
 
-    for j in range(1,n+1):
-        answer[i][j] = j
-
-
-# 플로이드워셜
-for k in range(1,n+1):
-    for i in range(1,n+1):
-        for j in range(1,n+1):
-            new_cost = dist[i][k] + dist[k][j]
-            if new_cost < dist[i][j]:
-                dist[i][j] = new_cost
-                answer[i][j] = answer[i][k]
-
-for i in range(1,n+1):
     for j in range(1,n+1):
         if i==j:
             print('-', end=' ')
         else:
-            print(answer[i][j], end=' ')
+            print(next[j], end=' ')
     print()
